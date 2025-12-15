@@ -2,7 +2,6 @@ import os
 import random
 import asyncio
 import logging
-from dotenv import load_dotenv
 
 from aiogram import Bot, Dispatcher, Router
 from aiogram.filters import Command
@@ -11,11 +10,9 @@ from aiogram.types import Message
 # -----------------------------
 # CONFIG
 # -----------------------------
-load_dotenv()
-
-BOT_TOKEN = os.getenv("7987099186:AAFP7QykPEi3kCYfTGdG2a-lV8FFl6QLivQ")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
-    raise RuntimeError("BOT_TOKEN is missing")
+    raise RuntimeError("BOT_TOKEN environment variable is missing")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("forecast-bot")
@@ -54,7 +51,7 @@ RECOMMENDATIONS = [
     "держать зонт критического мышления",
     "не выходить в ленту без защиты логики",
     "проверять источник перед реакцией",
-    "делать паузу между прочитал и поверил",
+    "делать паузу между «прочитал» и «поверил»",
     "помнить, что громкость ≠ важность",
 ]
 
@@ -226,7 +223,7 @@ async def main():
     dp = Dispatcher()
     dp.include_router(router)
 
-    logger.info("Bot started")
+    logger.info("Bot started (polling)")
     await dp.start_polling(bot)
 
 
