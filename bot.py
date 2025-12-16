@@ -507,8 +507,14 @@ def build_message(city: str, metrics: dict, top_articles: List[Article]) -> str:
 
     metrics_block = pick(METRIC_TEMPLATES).format(temp=w["temp"], wind=w["wind"], press=w["press"])
     radar_block = f"{pick(RADAR_HEADERS)}\n" + pick(RADAR_LINES).format(n=int(metrics["n"]))
-    if int(metrics["n"]) == 0:
-    radar_block += "\n⚠️ Это не прогноз «ничего не будет», а отсутствие новостных совпадений за 24 часа."
+
+if int(metrics["n"]) == 0:
+    radar_block += (
+        "\n⚠️ За последние 24 часа не найдено новостных материалов по запросу "
+        "(город + протестные ключевые слова). "
+        "Это не означает, что событий не будет — только отсутствие публичных сигналов."
+    )
+
 
     conf_block = pick(CONF_TEMPLATES).format(conf=w["conf"])
     final = pick(FINALS)
